@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero C — Bold Statement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0e0d10;
+    --ink:#fafaf7;
+    --muted:#8a8790;
+    --accent:#ff2d87;
+    --accent-2:#ffb169;
+    --line:rgba(250,250,247,.1);
+    --sans:'Inter',system-ui,sans-serif;
+    --mono:'JetBrains Mono',monospace;
+  }
+  html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);overflow:hidden}
+  body{-webkit-font-smoothing:antialiased}
+
+  .stage{
+    min-height:100vh;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    padding:32px 48px;
+    isolation:isolate;
+  }
+
+  /* glow background */
+  .stage::before{
+    content:'';position:absolute;inset:0;z-index:-2;
+    background:
+      radial-gradient(60% 80% at 80% 0%, rgba(255,45,135,.22), transparent 60%),
+      radial-gradient(50% 70% at 20% 100%, rgba(255,177,105,.10), transparent 60%),
+      var(--bg);
+  }
+  .stage::after{
+    content:'';position:absolute;inset:0;z-index:-1;
+    background-image:
+      linear-gradient(rgba(250,250,247,.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(250,250,247,.025) 1px, transparent 1px);
+    background-size:48px 48px;
+    mask-image:radial-gradient(ellipse at center, black 40%, transparent 80%);
+  }
+
+  /* nav */
+  .nav{display:flex;justify-content:space-between;align-items:center;padding-bottom:24px}
+  .logo{font-weight:700;font-size:15px;letter-spacing:-.02em;display:flex;align-items:center;gap:10px}
+  .logo-mark{
+    width:24px;height:24px;border-radius:50%;
+    background:conic-gradient(from 200deg, var(--accent), var(--accent-2), var(--accent));
+    box-shadow:0 0 24px rgba(255,45,135,.4);
+  }
+  .nav ul{list-style:none;display:flex;gap:30px;font-size:13px;color:var(--muted)}
+  .nav a{color:inherit;text-decoration:none;transition:.2s}
+  .nav a:hover{color:var(--ink)}
+  .nav-cta{font-size:13px;color:var(--ink);padding:10px 18px;border:1px solid var(--line);border-radius:100px;text-decoration:none;background:rgba(250,250,247,.04);backdrop-filter:blur(8px)}
+
+  /* hero block */
+  .hero{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:0 0 60px;
+    max-width:1240px;
+    margin:0 auto;
+    width:100%;
+  }
+  .kicker{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:36px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .kicker-line{height:1px;flex:1;max-width:80px;background:var(--line)}
+  .kicker b{color:var(--accent);font-weight:500}
+
+  h1{
+    font-size:clamp(64px, 10vw, 168px);
+    line-height:.86;
+    letter-spacing:-.055em;
+    font-weight:800;
+    margin-bottom:48px;
+  }
+  h1 .gradient{
+    background:linear-gradient(120deg, var(--accent) 0%, var(--accent-2) 90%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  h1 .stop{display:inline-block;color:var(--muted);position:relative;font-weight:700}
+  h1 .stop::after{
+    content:'';position:absolute;left:0;right:0;top:50%;height:6px;
+    background:var(--ink);transform:translateY(-50%);
+  }
+
+  .below{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:end}
+  .lede{font-size:18px;line-height:1.5;color:#cbc7c4;max-width:480px}
+  .lede b{color:var(--ink);font-weight:500}
+
+  .right-group{display:flex;flex-direction:column;gap:18px;align-items:flex-start}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:16px 24px;border-radius:100px;font-size:14px;font-weight:600;text-decoration:none;transition:.2s}
+  .btn-fill{background:var(--ink);color:var(--bg)}
+  .btn-fill:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,255,255,.18)}
+  .btn-ghost{border:1px solid var(--line);color:var(--ink);background:rgba(250,250,247,.03);backdrop-filter:blur(8px)}
+  .btn-ghost:hover{background:rgba(250,250,247,.08)}
+
+  .proofs{
+    display:flex;align-items:center;gap:18px;
+    font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.05em;
+  }
+  .proof-num{font-family:var(--sans);font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+  .proof-sep{width:24px;height:1px;background:var(--line)}
+
+  /* bottom marquee */
+  .marquee{
+    position:absolute;left:0;right:0;bottom:0;
+    overflow:hidden;
+    border-top:1px solid var(--line);
+    padding:14px 0;
+    font-family:var(--mono);font-size:12px;color:var(--muted);
+    letter-spacing:.08em;
+    background:rgba(14,13,16,.6);
+    backdrop-filter:blur(10px);
+    mask-image:linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  }
+  .marquee-track{display:flex;gap:42px;animation:scroll 40s linear infinite;white-space:nowrap;width:max-content}
+  .marquee-track i{font-style:normal;color:var(--accent)}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* scroll cue */
+  .scroll-cue{
+    position:absolute;left:48px;bottom:90px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--muted);
+    writing-mode:vertical-rl;text-orientation:mixed;
+    display:flex;align-items:center;gap:10px;
+  }
+  .scroll-cue::after{content:'';width:1px;height:40px;background:linear-gradient(var(--ink),transparent);}
+</style>
+</head>
+<body>
+<div class="stage">
+  <nav class="nav">
+    <div class="logo"><span class="logo-mark"></span>AI.Transform</div>
+    <ul>
+      <li><a href="#">Философия</a></li>
+      <li><a href="#">Дорожная карта</a></li>
+      <li><a href="#">Технологии</a></li>
+      <li><a href="#">Кейсы</a></li>
+      <li><a href="#">Команда</a></li>
+    </ul>
+    <a class="nav-cta" href="#">Записаться на сессию</a>
+  </nav>
+
+  <section class="hero">
+    <div class="kicker">
+      <span class="kicker-line"></span>
+      <span><b>●</b>&nbsp;&nbsp;Стратегическая сессия · 90 минут</span>
+    </div>
+
+    <h1>
+      Хватит&nbsp;<span class="stop">внедрять</span>&nbsp;AI.<br>
+      Начните <span class="gradient">меняться.</span>
+    </h1>
+
+    <div class="below">
+      <p class="lede">Мы создаём фундамент для кратного роста через глубокую AI-трансформацию. <b>Инструменты не работают без пересборки системы</b> — оргструктуры, культуры и мышления команды.</p>
+      <div class="right-group">
+        <div class="cta-row">
+          <a class="btn btn-fill" href="#">Записаться → 90 мин</a>
+          <a class="btn btn-ghost" href="#">Смотреть кейс</a>
+        </div>
+        <div class="proofs">
+          <span><span class="proof-num">−75%</span> опер. затрат</span>
+          <span class="proof-sep"></span>
+          <span><span class="proof-num">90%</span> решений у AI</span>
+          <span class="proof-sep"></span>
+          <span><span class="proof-num">10 млрд₽</span> опыта</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="scroll-cue">SCROLL</div>
+
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>MULTI-AGENT SYSTEMS</span><i>●</i>
+      <span>RAG-АРХИТЕКТУРА</span><i>●</i>
+      <span>CUSTOM TOOLING</span><i>●</i>
+      <span>DATA GOVERNANCE</span><i>●</i>
+      <span>HUMAN-IN-THE-LOOP</span><i>●</i>
+      <span>LANGGRAPH</span><i>●</i>
+      <span>MULTI-AGENT SYSTEMS</span><i>●</i>
+      <span>RAG-АРХИТЕКТУРА</span><i>●</i>
+      <span>CUSTOM TOOLING</span><i>●</i>
+      <span>DATA GOVERNANCE</span><i>●</i>
+      <span>HUMAN-IN-THE-LOOP</span><i>●</i>
+      <span>LANGGRAPH</span><i>●</i>
+    </div>
+  </div>
+</div>
+</body>
+</html>

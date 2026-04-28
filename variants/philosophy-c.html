@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Philosophy C — Big Quote</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0e0d10;
+    --ink:#fafaf7;
+    --muted:#8a8790;
+    --accent:#ff2d87;
+    --line:rgba(250,250,247,.1);
+    --sans:'Inter',system-ui,sans-serif;
+    --mono:'JetBrains Mono',monospace;
+  }
+  html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  .stage{min-height:100vh;padding:96px 48px;max-width:1440px;margin:0 auto;display:flex;flex-direction:column;gap:72px;position:relative;isolation:isolate}
+  .stage::before{
+    content:'';position:absolute;inset:0;z-index:-1;
+    background:
+      radial-gradient(40% 60% at 90% 10%, rgba(255,45,135,.14), transparent 60%),
+      radial-gradient(40% 60% at 0% 100%, rgba(255,45,135,.06), transparent 60%);
+    pointer-events:none;
+  }
+
+  /* header */
+  .header{display:flex;align-items:flex-start;justify-content:space-between;gap:48px}
+  .badge{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:12px}
+  .badge::before{content:'';width:8px;height:8px;background:var(--accent);border-radius:50%;box-shadow:0 0 14px var(--accent)}
+  .head-side{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.06em;text-align:right;line-height:1.6}
+  .head-side b{color:var(--ink);font-weight:500}
+
+  /* big quote */
+  .pull{
+    font-size:clamp(48px, 6.6vw, 108px);
+    line-height:.96;
+    letter-spacing:-.045em;
+    font-weight:700;
+    max-width:1280px;
+  }
+  .pull .gray{color:#5d5b62}
+  .pull .accent{color:var(--accent)}
+  .pull .underline{
+    position:relative;
+    display:inline-block;
+  }
+  .pull .underline::after{
+    content:'';position:absolute;left:0;right:0;bottom:.06em;height:.08em;
+    background:var(--accent);
+    border-radius:4px;
+  }
+
+  /* divider */
+  .divider{
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    gap:24px;
+    align-items:center;
+    font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;
+  }
+  .divider .line{height:1px;background:var(--line)}
+
+  /* three pillars */
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .pillar{
+    background:rgba(250,250,247,.03);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:32px 28px 36px;
+    display:flex;flex-direction:column;gap:18px;
+    position:relative;overflow:hidden;
+    transition:.3s;
+    backdrop-filter:blur(8px);
+  }
+  .pillar:hover{border-color:rgba(255,45,135,.4);transform:translateY(-4px);background:rgba(255,45,135,.04)}
+
+  .pillar-head{display:flex;align-items:center;justify-content:space-between}
+  .pillar-num{
+    font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--muted);
+  }
+  .pillar-icon{
+    width:34px;height:34px;border-radius:8px;
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--accent);
+  }
+  .pillar h3{font-size:26px;line-height:1.1;letter-spacing:-.02em;font-weight:600}
+  .pillar p{font-size:14px;line-height:1.55;color:#bdb9b3}
+
+  .pillar-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
+  .pillar-tags span{
+    font-family:var(--mono);font-size:10px;letter-spacing:.06em;
+    color:var(--muted);
+    padding:4px 10px;border:1px solid var(--line);border-radius:100px;
+  }
+
+  .pillar.featured{
+    background:linear-gradient(180deg, rgba(255,45,135,.16), rgba(255,45,135,.04));
+    border-color:rgba(255,45,135,.35);
+  }
+  .pillar.featured .pillar-icon{color:var(--ink);background:var(--accent);border-color:var(--accent)}
+  .pillar.featured .pillar-num{color:var(--accent)}
+
+  /* CTA bar */
+  .ctabar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px 28px;
+    border:1px solid var(--line);
+    border-radius:100px;
+    background:rgba(250,250,247,.03);
+    backdrop-filter:blur(10px);
+  }
+  .ctabar-left{display:flex;align-items:center;gap:18px}
+  .ctabar-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+  .ctabar-text{font-size:16px;color:var(--ink)}
+  .ctabar-text b{color:var(--ink);font-weight:600}
+  .ctabar a{
+    background:var(--accent);color:#fff;
+    padding:12px 22px;border-radius:100px;
+    text-decoration:none;font-size:14px;font-weight:600;
+    display:inline-flex;align-items:center;gap:8px;
+    transition:.2s;
+  }
+  .ctabar a:hover{background:#ff5099;transform:translateX(2px)}
+</style>
+</head>
+<body>
+<div class="stage">
+  <header class="header">
+    <div class="badge">Философия · 01</div>
+    <div class="head-side">
+      Манифест ‘26 / <b>AI-трансформация</b><br>
+      AI.Transform · Москва
+    </div>
+  </header>
+
+  <h2 class="pull">
+    <span class="gray">Большинство внедряют AI</span><br>
+    как <span class="underline">пластырь</span>.<br>
+    Мы перестраиваем <span class="accent">систему<br>целиком.</span>
+  </h2>
+
+  <div class="divider">
+    <span>// Три уровня пересборки</span>
+    <div class="line"></div>
+    <span>FIG. 01</span>
+  </div>
+
+  <div class="pillars">
+    <div class="pillar">
+      <div class="pillar-head">
+        <span class="pillar-num">01 / СТРУКТУРА</span>
+        <span class="pillar-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><path d="M10 6h4M6 10v4M14 18h4M18 10v4"/></svg>
+        </span>
+      </div>
+      <h3>Оргструктура<br>под AI</h3>
+      <p>Пересобираем роли, процессы и иерархию под новые возможности агентов. Ответственность смещается из вертикали в продукт.</p>
+      <div class="pillar-tags"><span>roles</span><span>workflows</span><span>RACI</span></div>
+    </div>
+
+    <div class="pillar featured">
+      <div class="pillar-head">
+        <span class="pillar-num">02 / КУЛЬТУРА</span>
+        <span class="pillar-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+        </span>
+      </div>
+      <h3>Из исполнителей —<br>во владельцев</h3>
+      <p>Меняем мышление команды: вместо «выполнить задачу» — «спроектировать агента, который её выполнит». Сопротивление — часть работы.</p>
+      <div class="pillar-tags"><span>mindset</span><span>workshops</span><span>agency</span></div>
+    </div>
+
+    <div class="pillar">
+      <div class="pillar-head">
+        <span class="pillar-num">03 / ТЕХНОЛОГИИ</span>
+        <span class="pillar-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </span>
+      </div>
+      <h3>Кастомные<br>AI-агенты</h3>
+      <p>Multi-Agent Systems, RAG, custom tooling и Data Governance — встроенные в обновлённый фундамент бизнеса, а не сверху на старый.</p>
+      <div class="pillar-tags"><span>LangGraph</span><span>RAG</span><span>HITL</span></div>
+    </div>
+  </div>
+
+  <div class="ctabar">
+    <div class="ctabar-left">
+      <span class="ctabar-num">→ ШАГ 01</span>
+      <span class="ctabar-text">90 минут стратегической сессии — <b>и у вас есть карта трансформации.</b></span>
+    </div>
+    <a href="#">Записаться <span>→</span></a>
+  </div>
+</div>
+</body>
+</html>
