@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI.Transform — варианты оформления</title>
+<style>
+  html,body{margin:0;padding:0;height:100%;font-family:'Inter',system-ui,sans-serif;background:#0a0a0c}
+  iframe{width:100%;height:100%;border:0;display:block;background:#fff}
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel">
+const { DesignCanvas, DCSection, DCArtboard } = window;
+
+const Frame = ({src}) => <iframe src={src} title={src} loading="lazy" />;
+
+function App(){
+  return (
+    <DesignCanvas title="AI.Transform — варианты первого и второго экрана">
+      <DCSection id="hero" title="① Первый экран — Hero" subtitle="Три направления для шапки лендинга">
+        <DCArtboard id="hero-a" label="A · Editorial Split (тёмный, серифный акцент)" width={1440} height={900}>
+          <Frame src="variants/hero-a.html" />
+        </DCArtboard>
+        <DCArtboard id="hero-b" label="B · Light & Diagrammatic (светлый, схема справа)" width={1440} height={900}>
+          <Frame src="variants/hero-b.html" />
+        </DCArtboard>
+        <DCArtboard id="hero-c" label="C · Bold Statement (крупный заголовок, градиент)" width={1440} height={900}>
+          <Frame src="variants/hero-c.html" />
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="philo" title="② Второй экран — Философия / Полный цикл" subtitle="Три направления для второго блока">
+        <DCArtboard id="philo-a" label="A · Editorial Contrast (контраст панелей, римские цифры)" width={1440} height={1100}>
+          <Frame src="variants/philosophy-a.html" />
+        </DCArtboard>
+        <DCArtboard id="philo-b" label="B · AS IS → TO BE Diagram (схема перехода)" width={1440} height={1100}>
+          <Frame src="variants/philosophy-b.html" />
+        </DCArtboard>
+        <DCArtboard id="philo-c" label="C · Big Quote + Pillars (тёмный, манифест)" width={1440} height={1100}>
+          <Frame src="variants/philosophy-c.html" />
+        </DCArtboard>
+      </DCSection>
+    </DesignCanvas>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
